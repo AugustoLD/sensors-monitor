@@ -17,9 +17,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-def filter_by_timestamp(collection, timestamp):
+def filter_by_timestamp(db_collection, timestamp):
     values_list = []
-    for value in collection.find({'timestamp': {'$gt': timestamp}}):
+    for value in db_collection.find({'timestamp': {'$gt': timestamp}}):
         del(value['_id'])
         values_list.append(value)
     return values_list

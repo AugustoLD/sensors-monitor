@@ -19,7 +19,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from flask import Flask, jsonify, Response, json
+from flask import Flask, Response, json
 from flask.ext.pymongo import PyMongo
 from flask.ext.cors import CORS
 from multiprocessing import Process
@@ -37,17 +37,17 @@ def temperature(timestamp):
     temperature_list = filter_by_timestamp(mongo.db.temperature, timestamp)
     return Response(json.dumps(temperature_list), mimetype='application/json')
 
-@app.route(route_prefix + '/humidity/<int:timestamp>')
+@app.route(route_prefix + 'humidity/<int:timestamp>')
 def humidity(timestamp):
     humidity_list = filter_by_timestamp(mongo.db.humidity, timestamp)
     return Response(json.dumps(humidity_list), mimetype='application/json')
 
-@app.route(route_prefix + '/luminosity/<int:timestamp>')
+@app.route(route_prefix + 'luminosity/<int:timestamp>')
 def luminosity(timestamp):
     luminosity_list = filter_by_timestamp(mongo.db.luminosity, timestamp)
     return Response(json.dumps(luminosity_list), mimetype='application/json')
 
 if __name__ == "__main__":
-    api = Process(target=hello)
-    api.start()
+    sensor_reader = Process(target=hello)
+    sensor_reader.start()
     app.run(host='0.0.0.0')
