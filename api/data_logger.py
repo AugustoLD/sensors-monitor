@@ -62,5 +62,5 @@ def read_sensor(sensors_module_command):
         return ''
 
 def read_sensors():
-    serial_port.write(list(sensors_module_cmds.values()))
+    serial_port.write([ord('t'), ord('h'), ord('l')])
     return serial_port.readline().decode().rstrip(separation_char).split(separation_char)
