@@ -3,7 +3,7 @@ Application for monitoring sensors readings, currently with light, temperature a
 
 ## Modules
 ### API
-A python application that constantly acquires sensors data and store them in a MongoDB database and then provide these data via a RESTful API.
+A python application that constantly acquires sensors data and store them in a MongoDB database and then provide these data via a REST API.
 #### Requirements
 * [Python](https://www.python.org/)
   * [Flask](http://flask.pocoo.org/)
@@ -19,7 +19,7 @@ A python application that constantly acquires sensors data and store them in a M
   ```
   $ python api/sensors_api.py
   ```
-  
+
 ### Sensors Module AVR
 Uses an AVR microcontroller to interact with the sensors and provide the measured values via serial communication.
 #### Requirements
@@ -29,4 +29,4 @@ Uses an AVR microcontroller to interact with the sensors and provide the measure
 * [AVR-Util](https://github.com/CELTAB/AVR-Util)
 
 ### WEB Interface
-A WEB interface for plotting the datas as graphics and print them in PDF format.
+A WEB interface for plotting the data as graphics and print them in PDF format.
