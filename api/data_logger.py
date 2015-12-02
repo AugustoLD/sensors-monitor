@@ -21,37 +21,46 @@ from serial import Serial
 from time import time
 from pymongo import MongoClient
 
-serial_port = Serial('/dev/ttyUSB1', 19200, timeout=1)
+serial_port = Serial('/dev/ttyUSB0', 19200, timeout=1)
 sensors_module_cmds = {'temperature': ord('t'), 'humidity': ord('h'), 'luminosity': ord('l')}
+separation_char = "*"
 
 def device_scheduler():
-    mongo_db = MongoClient().sensors
+    mongo_db = MongoClient().sensors_monitor
     while(True):
-        sensor_value = read_sensor(sensors_module_cmds['temperature'])
+        temperature, humidity, luminosity = read_sensors()
+        timestamp = int(time()) * 1000;
+
         mongo_db.temperature.insert_one(
                 {
-                    'timestamp': int(time()),
-                    'degree': sensor_value
+                    'timestamp': timestamp,
+                    'degree': int(temperature)
                 }
         )
 
-        sensor_value = read_sensor(sensors_module_cmds['humidity'])
         mongo_db.humidity.insert_one(
                 {
-                    'timestamp': int(time()),
-                    'percent': sensor_value
+                    'timestamp': timestamp,
+                    'percent': int(humidity)
                 }
         )
 
-        sensor_value = read_sensor(sensors_module_cmds['luminosity'])
         mongo_db.luminosity.insert_one(
                 {
-                    'timestamp': int(time()),
-                    'intensity': sensor_value
+                    'timestamp': timestamp,
+                    'intensity': int(luminosity)
                 }
         )
 
 def read_sensor(sensors_module_command):
-    # for some reason, the data to write must be an iterable object
-    serial_port.write([sensor_command])
-    return int(serial_port.readline())
+    # must be an iterable object
+    serial_port.write([sensors_module_command])
+    sensor_value = serial_port.readline().rstrip(separation_char)
+    if sensor_value.isnumeric:
+        return int(sensor_value)
+    else:
+        return ''
+
+def read_sensors():
+    serial_port.write(list(sensors_module_cmds.values()))
+    return serial_port.readline().decode().rstrip(separation_char).split(separation_char)

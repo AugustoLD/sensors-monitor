@@ -43,6 +43,7 @@ ISR(USART_RX_vect)
 		} while(ret == -1);
 		dht11_value = ret;
 		USART_print_byte(dht11_value);
+		USART_print_string("*");
 		break;
 	case HUMIDTY:
 		do {
@@ -50,6 +51,7 @@ ISR(USART_RX_vect)
 		} while(ret == -1);
 		dht11_value = ret;
 		USART_print_byte(dht11_value);
+		USART_print_string("*");
 		break;
 	}
 }
@@ -62,6 +64,7 @@ ISR(ADC_vect)
 	uint16_t value = high;
 	value = (value << 8) | low;
 	USART_print_word(value);
+	USART_print_string("*");
 }
 
 int main(void)

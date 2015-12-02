@@ -27,7 +27,7 @@ from filters import filter_by_timestamp
 from data_logger import device_scheduler
 
 # CONFIGURATION
-app = Flask('sensors')
+app = Flask('sensors_monitor')
 CORS(app)
 mongo = PyMongo(app)
 route_prefix = '/sensors/api/'
