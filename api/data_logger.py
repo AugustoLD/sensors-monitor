@@ -26,6 +26,7 @@ sensors_module_cmds = {'temperature': ord('t'), 'humidity': ord('h'), 'luminosit
 separation_char = "*"
 
 def device_scheduler():
+    MongoClient().drop_database('sensors_monitor')
     mongo_db = MongoClient().sensors_monitor
     while(True):
         temperature, humidity, luminosity = read_sensors()
