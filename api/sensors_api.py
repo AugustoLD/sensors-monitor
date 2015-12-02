@@ -24,7 +24,7 @@ from flask.ext.pymongo import PyMongo
 from flask.ext.cors import CORS
 from multiprocessing import Process
 from filters import filter_by_timestamp
-from hello import hello
+from data_logger import device_scheduler
 
 # CONFIGURATION
 app = Flask('sensors')
@@ -48,6 +48,6 @@ def luminosity(timestamp):
     return Response(json.dumps(luminosity_list), mimetype='application/json')
 
 if __name__ == "__main__":
-    sensor_reader = Process(target=hello)
-    sensor_reader.start()
+    data_logger_proc = Process(target=device_scheduler)
+    data_logger_proc.start()
     app.run(host='0.0.0.0')
