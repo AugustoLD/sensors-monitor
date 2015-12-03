@@ -1,1 +1,4 @@
-frontend/lib/*.js linguist-vendored
+frontend/lib/* linguist-vendored
+exporting.js linguist-vendored=false
+highstock.js linguist-vendored=false
+jquery.min.js linguist-vendored=false
